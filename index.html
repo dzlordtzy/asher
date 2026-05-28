@@ -32,8 +32,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            
-            /* UPDATED: Crisp Safari Gradient Background */
             background: linear-gradient(135deg, #e3f0d3 0%, #8eb568 50%, #447a37 100%);
             background-attachment: fixed;
             overflow-x: hidden;
@@ -196,7 +194,6 @@
             text-shadow: 1px 1px 0px white;
         }
         
-        /* NEW: Modal Image Styling */
         .modal-img {
             width: 100%;
             max-width: 260px;
@@ -317,6 +314,12 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.15);
             text-align: center;
             border: var(--glass-border);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .details-card.celebrant {
@@ -324,6 +327,18 @@
             background: linear-gradient(135deg, rgba(255,253,243,0.92) 0%, rgba(255,246,214,0.92) 100%);
             border: 4px solid var(--safari-yellow);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* NEW: Clickable Map Card Highlights */
+        .map-card {
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .map-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--safari-orange);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.25);
         }
 
         .details-card h3 {
@@ -360,6 +375,22 @@
             font-weight: 600;
             color: #566573;
             margin-top: 3px;
+            margin-bottom: 8px;
+        }
+
+        /* NEW: Map Button Indicator Tag */
+        .map-tag {
+            background-color: var(--safari-green);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 20px;
+            transition: background-color 0.2s ease;
+        }
+
+        .map-card:hover .map-tag {
+            background-color: var(--safari-orange);
         }
 
         /* COMPACT GALLERY IMAGES */
@@ -416,7 +447,7 @@
             .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .photo-item img { height: 145px; }
             .nav-tab { font-size: 1.15rem; padding: 14px 8px; }
-            .modal-img { max-width: 220px; } /* Scales image slightly on mobile */
+            .modal-img { max-width: 220px; }
         }
     </style>
 </head>
@@ -481,17 +512,19 @@
                         <p class="sub-detail">Saturday | 10:30 AM</p>
                     </div>
 
-                    <div class="details-card">
+                    <a href="https://maps.app.goo.gl/rCPxsVzNMiYqNcbN6" target="_blank" class="details-card map-card">
                         <h3>⛪ The Church</h3>
                         <p class="main-detail">Sacred Heart Parish Church</p>
                         <p class="sub-detail">Brgy. Salacot, San Miguel, Bulacan</p>
-                    </div>
+                        <span class="map-tag">📍 Open Maps</span>
+                    </a>
 
-                    <div class="details-card">
+                    <a href="https://maps.app.goo.gl/P7gcykLwttemGhzU7" target="_blank" class="details-card map-card">
                         <h3>🎉 The Reception / Venue</h3>
                         <p class="main-detail">@Reyes Residence</p>
                         <p class="sub-detail">Zone 7, Pinambaran SMB.</p>
-                    </div>
+                        <span class="map-tag">📍 Open Maps</span>
+                    </a>
                 </div>
             </section>
 
@@ -512,8 +545,6 @@
                     <div class="photo-item"><img src="asher8.jpg" alt="Asher 8"></div>
                     <div class="photo-item"><img src="asher9.jpg" alt="Asher 9"></div>
                     <div class="photo-item"><img src="asher10.jpg" alt="Asher 10"></div>
-                    <div class="photo-item"><img src="asher11.jpg" alt="Asher 10"></div>
-                    <div class="photo-item"><img src="asher12.jpg" alt="Asher 10"></div>
                 </div>
             </section>
 
@@ -537,7 +568,6 @@
         let countdownInterval;
         let timeLeft = 10;
 
-        // Function to securely close modal and transfer directly to layout
         function goToDashboard() {
             clearInterval(countdownInterval);
             safariModal.style.display = 'none';
@@ -546,11 +576,9 @@
             window.scrollTo(0, 0);
         }
 
-        // Trigger step 1 modal popup & initialization countdown
         openBtn.onclick = function() {
             safariModal.style.display = 'flex';
             
-            // Reset timer in case it was opened before
             timeLeft = 10;
             countdownNum.textContent = timeLeft;
             
@@ -563,10 +591,8 @@
             }, 1000);
         };
 
-        // Manual bypass button directly from modal popup window
         modalSkipBtn.onclick = goToDashboard;
 
-        // Optimized state switcher mechanics for UI content elements
         tabHome.onclick = function() {
             tabGallery.classList.remove('active');
             tabHome.classList.add('active');
