@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asher Chase's 1st Birthday & Christening</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --safari-green: #2d5a27;
+            --safari-dark: #1b3b17;
+            --safari-brown: #7c532c;
+            --safari-orange: #e67e22;
+            --safari-yellow: #f1c40f;
+            --text-dark: #1c2833;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: 3px solid #2d5a27;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            /* UPDATED: Crisp Safari Gradient Background */
+            background: linear-gradient(135deg, #e3f0d3 0%, #8eb568 50%, #447a37 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* HIGH-EFFICIENCY SCREEN CONTROLLER */
+        .screen {
+            width: 100%;
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        #dashboard-container {
+            display: none;
+            justify-content: flex-start;
+            padding: 0;
+        }
+
+        /* JUNGLE COMPACT BUTTONS */
+        .safari-btn {
+            font-family: 'Chewy', cursive;
+            background-color: var(--safari-orange);
+            color: white;
+            border: 3px solid white;
+            padding: 12px 30px;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        .safari-btn:hover {
+            background-color: var(--safari-green);
+            transform: scale(1.05);
+        }
+
+        .pulse {
+            animation: buttonPulse 2s infinite;
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        /* STEP 1: ENVELOPE SCREEN */
+        #envelope-container {
+            background-color: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(3px);
+        }
+
+        .envelope-wrapper {
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 25px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-color: #d2b48c;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-bottom: 100px solid #c5a073;
+            z-index: 3;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 105px solid #b58d5c;
+            z-index: 4;
+        }
+
+        .envelope-card {
+            position: absolute;
+            left: 5%;
+            top: 12px;
+            width: 90%;
+            height: 165px;
+            background: white;
+            z-index: 2;
+            overflow: hidden;
+            border-radius: 6px;
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.15);
+            transition: transform 0.4s ease;
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .envelope-wrapper:hover .envelope-card {
+            transform: translateY(-30px);
+        }
+
+        /* JUNGLE MODAL AUTO-COUNTDOWN STYLING */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(12, 28, 10, 0.9);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-box {
+            background: linear-gradient(135deg, #fffdf3 0%, #f4edd2 100%);
+            border: 5px solid var(--safari-green);
+            border-radius: 25px;
+            padding: 30px 20px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-box h2 {
+            font-family: 'Chewy', cursive;
+            color: var(--safari-green);
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 0px white;
+        }
+        
+        /* NEW: Modal Image Styling */
+        .modal-img {
+            width: 100%;
+            max-width: 260px;
+            height: auto;
+            border-radius: 16px;
+            border: 4px solid var(--safari-green);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            margin: 15px 0;
+        }
+
+        .modal-box p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--safari-brown);
+            margin-bottom: 15px;
+        }
+
+        .timer-badge {
+            background-color: var(--safari-dark);
+            color: var(--safari-yellow);
+            display: inline-block;
+            padding: 6px 18px;
+            font-weight: 700;
+            border-radius: 20px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            border: 2px solid var(--safari-yellow);
+        }
+
+        /* STEP 3: MAIN DASHBOARD NAVIGATION */
+        .dashboard-nav {
+            display: flex;
+            width: 100%;
+            background-color: var(--safari-green);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .nav-tab {
+            flex: 1;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 16px;
+            font-family: 'Chewy', cursive;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .nav-tab.active {
+            background-color: rgba(255,255,255,0.15);
+            color: var(--safari-yellow);
+            border-bottom: 5px solid var(--safari-yellow);
+        }
+
+        /* HIGHLIGHTED CONTENT LAYOUT */
+        .dashboard-content {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px 15px 40px 15px;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            animation: tabFade 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes tabFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* FLOATING CARD HIGHLIGHTS */
+        .welcome-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 15px 10px;
+            background: var(--glass-bg);
+            border-left: 6px solid var(--safari-orange);
+            border-right: 6px solid var(--safari-orange);
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .welcome-header h1 {
+            font-family: 'Chewy', cursive;
+            color: var(--safari-green);
+            font-size: 2.3rem;
+            line-height: 1.1;
+        }
+
+        .welcome-header p {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--safari-brown);
+            margin-top: 5px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .details-card {
+            background: var(--glass-bg);
+            padding: 22px 15px;
+            border-radius: 18px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            text-align: center;
+            border: var(--glass-border);
+        }
+
+        .details-card.celebrant {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(255,253,243,0.92) 0%, rgba(255,246,214,0.92) 100%);
+            border: 4px solid var(--safari-yellow);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .details-card h3 {
+            font-family: 'Chewy', cursive;
+            color: var(--safari-brown);
+            font-size: 1.25rem;
+            margin-bottom: 6px;
+        }
+
+        .details-card h2 {
+            font-family: 'Chewy', cursive;
+            font-size: 2.8rem;
+            color: var(--safari-green);
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .highlight-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--safari-orange);
+            margin-top: 4px;
+        }
+
+        .main-detail {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .sub-detail {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #566573;
+            margin-top: 3px;
+        }
+
+        /* COMPACT GALLERY IMAGES */
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: var(--glass-bg);
+            border-radius: 14px;
+            border-bottom: 4px solid var(--safari-green);
+        }
+
+        .gallery-header h2 {
+            font-family: 'Chewy', cursive;
+            color: var(--safari-green);
+            font-size: 2.2rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .photo-item {
+            background: white;
+            padding: 6px;
+            border-radius: 10px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+            transition: transform 0.25s ease;
+        }
+
+        .photo-item:nth-child(even) { transform: rotate(-1.5deg); }
+        .photo-item:nth-child(odd) { transform: rotate(1.5deg); }
+
+        .photo-item:hover {
+            transform: scale(1.06) rotate(0deg) !important;
+            z-index: 10;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        /* SMART RESPONSIVE SCALING */
+        @media (max-width: 600px) {
+            .details-grid { grid-template-columns: 1fr; }
+            .details-card.celebrant { grid-column: span 1; }
+            .details-card h2 { font-size: 2.4rem; }
+            .welcome-header h1 { font-size: 1.8rem; }
+            .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .photo-item img { height: 145px; }
+            .nav-tab { font-size: 1.15rem; padding: 14px 8px; }
+            .modal-img { max-width: 220px; } /* Scales image slightly on mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="envelope-container" class="screen">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-card">
+                    <img src="asher.jpg" alt="Asher Preview" class="preview-img">
+                </div>
+            </div>
+        </div>
+        <button id="open-btn" class="safari-btn pulse">✉&nbsp;&nbsp;Open Invitation</button>
+    </div>
+
+
+    <div id="safari-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h2>You're invited to celebrate Asher Chase's 1st Birthday & Christening!</h2>
+            
+            <img src="asher.jpg" alt="Asher Invitation" class="modal-img">
+            
+            <p>Get ready for a wild adventure! 🦁🌿</p>
+            
+            <div class="timer-badge">
+                Opening dashboard in <span id="countdown-num">10</span>s...
+            </div>
+            
+            <div>
+                <button id="modal-skip-btn" class="safari-btn">Enter Website Now ➔</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dashboard-container" class="screen">
+        <nav class="dashboard-nav">
+            <button id="tab-home" class="nav-tab active">🌿 Home</button>
+            <button id="tab-gallery" class="nav-tab">📸 Gallery</button>
+        </nav>
+
+        <main class="dashboard-content">
+            
+            <section id="home-section" class="tab-content active">
+                <div class="welcome-header">
+                    <h1>Welcome to the Wild Adventure!</h1>
+                    <p>Join us as we celebrate a milestone full of blessings and love.</p>
+                </div>
+
+                <div class="details-grid">
+                    <div class="details-card celebrant">
+                        <h3>🦁 Our Little Explorer</h3>
+                        <h2>ASHER CHASE</h2>
+                        <p class="highlight-text">Christening & 1st Birthday</p>
+                    </div>
+
+                    <div class="details-card">
+                        <h3>📅 Date & Time</h3>
+                        <p class="main-detail">June 13, 2026</p>
+                        <p class="sub-detail">Saturday | 10:30 AM</p>
+                    </div>
+
+                    <div class="details-card">
+                        <h3>⛪ The Church</h3>
+                        <p class="main-detail">Sacred Heart Parish Church</p>
+                        <p class="sub-detail">Brgy. Salacot, San Miguel, Bulacan</p>
+                    </div>
+
+                    <div class="details-card">
+                        <h3>🎉 The Reception / Venue</h3>
+                        <p class="main-detail">@Reyes Residence</p>
+                        <p class="sub-detail">Zone 7, Pinambaran SMB.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gallery-section" class="tab-content">
+                <div class="gallery-header">
+                    <h2>Asher's Photo Gallery</h2>
+                    <p>Growing up wild and sweet!</p>
+                </div>
+                
+                <div class="photo-grid">
+                    <div class="photo-item"><img src="asher1.jpg" alt="Asher 1"></div>
+                    <div class="photo-item"><img src="asher2.jpg" alt="Asher 2"></div>
+                    <div class="photo-item"><img src="asher3.jpg" alt="Asher 3"></div>
+                    <div class="photo-item"><img src="asher4.jpg" alt="Asher 4"></div>
+                    <div class="photo-item"><img src="asher5.jpg" alt="Asher 5"></div>
+                    <div class="photo-item"><img src="asher6.jpg" alt="Asher 6"></div>
+                    <div class="photo-item"><img src="asher7.jpg" alt="Asher 7"></div>
+                    <div class="photo-item"><img src="asher8.jpg" alt="Asher 8"></div>
+                    <div class="photo-item"><img src="asher9.jpg" alt="Asher 9"></div>
+                    <div class="photo-item"><img src="asher10.jpg" alt="Asher 10"></div>
+                    <div class="photo-item"><img src="asher11.jpg" alt="Asher 10"></div>
+                    <div class="photo-item"><img src="asher12.jpg" alt="Asher 10"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const envelopeScreen = document.getElementById('envelope-container');
+        const dashboardScreen = document.getElementById('dashboard-container');
+        const safariModal = document.getElementById('safari-modal');
+        const countdownNum = document.getElementById('countdown-num');
+        
+        const openBtn = document.getElementById('open-btn');
+        const modalSkipBtn = document.getElementById('modal-skip-btn');
+        
+        const tabHome = document.getElementById('tab-home');
+        const tabGallery = document.getElementById('tab-gallery');
+        const homeSection = document.getElementById('home-section');
+        const gallerySection = document.getElementById('gallery-section');
+
+        let countdownInterval;
+        let timeLeft = 10;
+
+        // Function to securely close modal and transfer directly to layout
+        function goToDashboard() {
+            clearInterval(countdownInterval);
+            safariModal.style.display = 'none';
+            envelopeScreen.style.display = 'none';
+            dashboardScreen.style.display = 'flex';
+            window.scrollTo(0, 0);
+        }
+
+        // Trigger step 1 modal popup & initialization countdown
+        openBtn.onclick = function() {
+            safariModal.style.display = 'flex';
+            
+            // Reset timer in case it was opened before
+            timeLeft = 10;
+            countdownNum.textContent = timeLeft;
+            
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                countdownNum.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    goToDashboard();
+                }
+            }, 1000);
+        };
+
+        // Manual bypass button directly from modal popup window
+        modalSkipBtn.onclick = goToDashboard;
+
+        // Optimized state switcher mechanics for UI content elements
+        tabHome.onclick = function() {
+            tabGallery.classList.remove('active');
+            tabHome.classList.add('active');
+            gallerySection.classList.remove('active');
+            homeSection.classList.add('active');
+        };
+
+        tabGallery.onclick = function() {
+            tabHome.classList.remove('active');
+            tabGallery.classList.add('active');
+            homeSection.classList.remove('active');
+            gallerySection.classList.add('active');
+        };
+    </script>
+</body>
+</html>
